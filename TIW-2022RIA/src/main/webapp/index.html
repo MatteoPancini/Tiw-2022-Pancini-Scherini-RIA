@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +9,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"> 
     <title>Login Page</title>
+    <script src="login.js" charset="utf-8" defer></script>
+        
+    <script src="utils.js" charset="utf-8" defer></script>
+    
 </head>
 <body>
     <section class="login_section">
     <section class="login_section_content">
     <h1>Welcome <br/> Back!</h1>
-	<form action="CheckLogin" method="POST">
+	<form action="#">
 		<span class="bold">Username</span><br/> <input class="input" type="text" name="username" required> <br>
 		<span class="bold">Password</span><br/> <input class="input" type="password" name="pwd" required><br>
-		<input type="submit" value="Sign in" class="login_section_content_button">
-		<p class="login_error" th:text=" ${errorMsg}"></p>
+		<input id="loginButton" type="button" value="Sign in" class="login_section_content_button">
+		<p id="errorMessage" class="login_error"></p>
 	</form>
-    <p>No account? <a href="CreateAccount">Register here</a></p>
+    <p>No account? <a href="register.html">Register here</a></p>
     </section>
     <section class="login_section_image">
         <h1>Find out the best <br/> photos in the World!</h1>

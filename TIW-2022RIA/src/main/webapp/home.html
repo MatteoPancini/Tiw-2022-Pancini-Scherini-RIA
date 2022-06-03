@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/homepage_style.css">
+    <script src="utils.js"></script>
+    <script src="home.js"></script>
+    <title>Home Page</title>
+</head>
+
+<body>
+    <header>
+        <a class="logo" href="home.html">Home Page</a>
+        <a class="logout" href="Logout">Logout</a>
+    </header>
+
+    <h2 id="alert" style="color: red"></h2>
+
+    <div class="album">
+        <div class="albumTag">
+            <h2>Your Albums</h2>
+        </div>
+
+        <table id="personalAlbums" class="albumList-table">
+            <thead class="table-head">
+                <tr>
+                    <th>Album Name</th>
+                    <th>User</th>
+                    <th>Creation Date</th>
+                    <th>Open album</th>
+                </tr>
+            </thead>
+            <tbody id="personalAlbumsBody"></tbody>
+        </table>
+    </div>
+
+    <div class="spaceNewAlbum">
+        <a id="createNewAlbum" class="createAlbum">
+            Create new album
+        </a>
+    </div>
+
+    <div class="album">
+        <div class="albumTag">
+            <h2>Albums from the community</h2>
+        </div>
+
+        <table id="communityAlbums" class="albumList-table">
+            <thead class="table-head">
+                <tr>
+                    <th>Album Name</th>
+                    <th>User</th>
+                    <th>Creation Date</th>
+                    <th>Open album</th>
+                </tr>
+            </thead>
+            <tbody id="communityAlbumsBody"></tbody>
+        </table>
+    </div>
+</body>

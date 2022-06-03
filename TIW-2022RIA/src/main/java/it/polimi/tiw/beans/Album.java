@@ -7,7 +7,7 @@ public class Album {
 	private int idAlbum;
 	private int idUser;
 	private String title;
-	private LocalDateTime creationDate;
+	//private LocalDateTime creationDate;
 	private String userAlbum;
 	
 	
@@ -22,7 +22,7 @@ public class Album {
 		this.idAlbum = idAlbum;
 		this.idUser = idUser;
 		this.title = title;
-		this.creationDate = creationDate;
+		//this.creationDate = creationDate;
 	}
 
 	public int getIdAlbum() {
@@ -49,13 +49,13 @@ public class Album {
 		this.title = title;
 	}
 
-	public LocalDateTime getCreationDate() {
+	/*public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
 	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
-	}
+	}*/
 
 	public String getUserAlbum() {
 		return userAlbum;

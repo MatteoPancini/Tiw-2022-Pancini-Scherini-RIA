@@ -37,9 +37,9 @@ public class AlbumDAO {
           userAlbum.setIdAlbum(resultSet.getInt("idAlbum"));
           userAlbum.setIdUser(resultSet.getInt("idUser"));
           userAlbum.setTitle(resultSet.getString("title"));
-          userAlbum.setCreationDate(new Date(resultSet.getDate("creationDate").getTime()).toInstant()
+          /*userAlbum.setCreationDate(new Date(resultSet.getDate("creationDate").getTime()).toInstant()
         	      .atZone(ZoneId.systemDefault())
-        	      .toLocalDateTime());
+        	      .toLocalDateTime());*/
           userAlbum.setUserAlbum(resultSet.getString("username"));
           
           userAlbumList.add(userAlbum);
@@ -83,11 +83,12 @@ public class AlbumDAO {
           userAlbum.setIdAlbum(resultSet.getInt("idAlbum"));
           userAlbum.setIdUser(resultSet.getInt("idUser"));
           userAlbum.setTitle(resultSet.getString("title"));
-          userAlbum.setCreationDate(new Date(resultSet.getDate("creationDate").getTime()).toInstant()
+          /*userAlbum.setCreationDate(new Date(resultSet.getDate("creationDate").getTime()).toInstant()
         	      .atZone(ZoneId.systemDefault())
         	      .toLocalDateTime());
+          userAlbum.setUserAlbum(resultSet.getString("username"));*/
           userAlbum.setUserAlbum(resultSet.getString("username"));
-          
+
           userAlbumList.add(userAlbum);
           
         }

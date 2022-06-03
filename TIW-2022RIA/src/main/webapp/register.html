@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="ISO-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./css/register_style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"> 
+        <title>Register Page</title>
+                
+         <script src="register.js" charset="utf-8" defer></script>
+         <script src="utils.js" charset="utf-8" defer></script>
+         
+        
+    </head>
+<body>
+    <section class="register_form_section">
+        <h1>Create new Account </h1>
+        <form id="register" name ="register" action="#" class="register_form">
+            <span class="bold">Email</span><br/> <input class="input" type="text" name="email" id="email" required> <br>
+            <span class="bold">Username</span><br/> <input class="input" type="text" name="username" id="username" required> <br>
+            <span class="bold">Password</span><br/> <input class="input" type="password" name="pwd" id="pwd" required><br>
+            <span class="bold">Confirm Password</span><br/> <input class="input" type="password" id ="confirmed_pwd" name="confirmed_pwd" required><br>
+            <input id="submitButton" type="button" value="Register" class="register_section_button">
+            <p id="errorMessage" class="register_error"></p>
+        </form> 
+        <p class="backButton">Already have an account? <a href="index.html">Login here</a></p>
+    </section>
+</body>
+</html>
