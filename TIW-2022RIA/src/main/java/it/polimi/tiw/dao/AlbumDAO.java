@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +22,7 @@ public class AlbumDAO {
   public List<Album> findUserAlbums(int idUser) throws SQLException {
     List<Album> userAlbumList = new ArrayList<Album>();
     
-    String albumQuery = "SELECT idAlbum, album.idUser, title, creationDate, username FROM album JOIN user ON user.idUser=album.idUser WHERE album.idUser = ? ORDER BY creationDate DESC";
+    String albumQuery = "SELECT idAlbum, album.idUser, title, creationDate, username FROM album JOIN user ON user.idUser=album.idUser WHERE album.idUser = ? ORDER BY idAlbum DESC";
     
     ResultSet resultSet = null;
     PreparedStatement pstatement = null;
@@ -37,6 +36,7 @@ public class AlbumDAO {
           userAlbum.setIdAlbum(resultSet.getInt("idAlbum"));
           userAlbum.setIdUser(resultSet.getInt("idUser"));
           userAlbum.setTitle(resultSet.getString("title"));
+          userAlbum.setCreationDate(new Date(resultSet.getDate("creationDate").getTime()));
           /*userAlbum.setCreationDate(new Date(resultSet.getDate("creationDate").getTime()).toInstant()
         	      .atZone(ZoneId.systemDefault())
         	      .toLocalDateTime());*/
@@ -69,7 +69,7 @@ public class AlbumDAO {
     List<Album> userAlbumList = new ArrayList<Album>();
     
     
-    String albumQuery = "SELECT idAlbum, album.idUser, title, creationDate, username FROM album JOIN user ON album.idUser=user.idUser WHERE album.idUser NOT IN (SELECT idUser FROM album WHERE idUser = ?) ORDER BY creationDate DESC";
+    String albumQuery = "SELECT idAlbum, album.idUser, title, creationDate, username FROM album JOIN user ON album.idUser=user.idUser WHERE album.idUser NOT IN (SELECT idUser FROM album WHERE idUser = ?) ORDER BY idAlbum DESC";
     
     ResultSet resultSet = null;
     PreparedStatement pstatement = null;
@@ -83,6 +83,7 @@ public class AlbumDAO {
           userAlbum.setIdAlbum(resultSet.getInt("idAlbum"));
           userAlbum.setIdUser(resultSet.getInt("idUser"));
           userAlbum.setTitle(resultSet.getString("title"));
+          userAlbum.setCreationDate(new Date(resultSet.getDate("creationDate").getTime()));
           /*userAlbum.setCreationDate(new Date(resultSet.getDate("creationDate").getTime()).toInstant()
         	      .atZone(ZoneId.systemDefault())
         	      .toLocalDateTime());
@@ -117,7 +118,7 @@ public class AlbumDAO {
       try(PreparedStatement preparedStatement = connection.prepareStatement(albumQuery)) {
           preparedStatement.setInt(1, idUser);
           preparedStatement.setString(2, title);
-          preparedStatement.setObject(3, new java.sql.Timestamp(new Date().getTime()));
+          preparedStatement.setDate(3, new java.sql.Date(new Date().getTime()));
           preparedStatement.executeUpdate();
       }
   }

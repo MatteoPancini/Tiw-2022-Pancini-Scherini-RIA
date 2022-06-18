@@ -1,6 +1,6 @@
 package it.polimi.tiw.beans;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Image {
 	private int idImage;
@@ -8,7 +8,7 @@ public class Image {
 	private int idAlbum;
 	private String title;
 	private String description;
-	private LocalDateTime date;
+	private Date date;
 	private String path;
 	private String username;
 	
@@ -25,7 +25,7 @@ public class Image {
 	public Image() {}
 	
 	
-	public Image(int idImage, int idUser, int idAlbum, String title, String description, LocalDateTime date, String path) {
+	public Image(int idImage, int idUser, int idAlbum, String title, String description, Date date, String path) {
 		this.idImage = idImage;
 		this.idUser = idUser;
 		this.idAlbum = idAlbum;
@@ -86,15 +86,18 @@ public class Image {
 	}
 
 
-	public LocalDateTime getDate() {
+
+	
+	public Date getDate() {
 		return date;
 	}
 
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
+	
 
 	public String getPath() {
 		return path;

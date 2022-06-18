@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -7,58 +7,153 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/homepage_style.css">
-    <script src="utils.js"></script>
-    <script src="home.js"></script>
+    <script src="utils.js" charset="utf-8" defer></script>
+    <script src="modal.js" charset="utf-8" defer></script>
+    <script src="home.js" charset="utf-8" defer></script>
     <title>Home Page</title>
 </head>
 
 <body>
     <header>
-        <a class="logo" href="home.html">Home Page</a>
-        <a class="logout" href="Logout">Logout</a>
+        <a id="idHome" class="logo" href="home.html">Home Page</a>
+        <a id="idLogout" class="logout" href="Logout">Logout</a>
     </header>
 
     <h2 id="alert" style="color: red"></h2>
 
-    <div class="album">
-        <div class="albumTag">
-            <h2>Your Albums</h2>
+    <div id="homePage">
+
+        <div class="album">
+            <div class="albumTag">
+                <h2>Your Albums</h2>
+            </div>
+
+            <table id="personalAlbums" class="albumList-table">
+                <thead class="table-head">
+                    <tr>
+                        <th>Album Name</th>
+                        <th>User</th>
+                        <th>Creation Date</th>
+                        <th>Open album</th>
+                    </tr>
+                </thead>
+                <tbody id="personalAlbumsBody"></tbody>
+            </table>
         </div>
 
-        <table id="personalAlbums" class="albumList-table">
-            <thead class="table-head">
-                <tr>
-                    <th>Album Name</th>
-                    <th>User</th>
-                    <th>Creation Date</th>
-                    <th>Open album</th>
-                </tr>
-            </thead>
-            <tbody id="personalAlbumsBody"></tbody>
-        </table>
-    </div>
-
-    <div class="spaceNewAlbum">
-        <a id="createNewAlbum" class="createAlbum">
-            Create new album
-        </a>
-    </div>
-
-    <div class="album">
-        <div class="albumTag">
-            <h2>Albums from the community</h2>
+        <div class="spaceNewAlbum">
+            <a id="createNewAlbum" class="createAlbum" type="button">
+                Create new album
+            </a>
         </div>
 
-        <table id="communityAlbums" class="albumList-table">
+        <div class="formContent" id="modalAlbumForm">
+            <div class="form_content_inner">
+                <span id="closeForm" class="close">&times;</span>
+                <h1>Create new Album</h1>
+                <form action="#" id="newAlbumForm" name="newAlbumForm">
+                    <div class="title">Title</div> <br /> <input class="input" id="albumTitle" type="text"
+                        name="albumTitle" required> <br />
+                    <div class="createButton">
+                        <input type="button" id="submitAlbum" value="Create Album" class="newElementButton"> <br />
+                    </div>
+                    <p id="errorMessage" class="showError"></p>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="album">
+            <div class="albumTag">
+                <h2>Albums from the community</h2>
+            </div>
+
+            <table id="communityAlbums" class="albumList-table">
+                <thead class="table-head">
+                    <tr>
+                        <th>Album Name</th>
+                        <th>User</th>
+                        <th>Creation Date</th>
+                        <th>Open album</th>
+                    </tr>
+                </thead>
+                <tbody id="communityAlbumsBody"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="album" id="albumContainer">
+        <h2 id="alert" style="color: red"></h2>
+        <table id="imagesContainer" class="albumList-table">
             <thead class="table-head">
                 <tr>
-                    <th>Album Name</th>
-                    <th>User</th>
-                    <th>Creation Date</th>
-                    <th>Open album</th>
+                    <th>Image Title</th>
+                    <th>Thumbnail</th>
                 </tr>
             </thead>
-            <tbody id="communityAlbumsBody"></tbody>
+
+            <tbody id="imagesContainerBody">
+            </tbody>
         </table>
+        <div class="arrowsDiv" id="arrows">
+            <a id="prevButton" class="leftArrow" text="Prev">Prev</a>
+            <a id="nextButton" class="rightArrow" text="Next">Next</a>
+            <div class="clear"></div>
+        </div>
+
+        <div class="spaceNewImage">
+            <a class="createImage" type="button" id="createNewImage">
+                Add new Image
+            </a>
+        </div>
     </div>
+    <div class="formIMGContent" id="modalImageForm">
+        <div class="form_content_inner">
+            <span id="closeIMGForm" class="close">&times;</span>
+
+            <h1>Add new Image</h1>
+            <form action="#" id="newImageForm" name="newImageForm">
+                <div class="title">Title</div> <br /> <input class="input" type="text" id="imageTitle" name="imageTitle"
+                    required> <br>
+                <br />
+                <div class="title">Description</div> <br /> <input class="input" type="text" id="description"
+                    name="description" required> <br>
+                <br />
+                <div class="title">Image <br />
+                    <input class="inputFile" type="file" id="file" name="file" accept=".png, .jpg">
+                </div>
+                <div class="createButton">
+                    <input type="button" id="submitImage" value="Add Image" class="newElementButton"> <br />
+                </div>
+                <p id="errorMessage" class="showError"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="imageDetailsForm" class="imageDetailsForm">
+        <div id="imageDetailsContent" class="imageDetailsContent">
+            <span id="closeImageDetails" class="close">&times;</span>
+            <h1 class="title">Titolo: <span id="imageTitle"></span></h1>
+            <img id="selected_image" class="selected_image" alt="can't load image"><br />
+            <h2 class="title">user: <span id="imageCreator"></span></h2>
+            <h2 class="title">creation date: <span id="imageDate"></span></h2>
+            <h2 class="title">description:</h2>
+            <p class="description" id="imageDescription">
+                <hr />
+            </p>
+            <div class="comments_container">
+                <form id="comment_form" class="comment_form" action="#">
+                    <div class="comment_input">
+                        <textarea placeholder="write a new comment..." name="comment" id="comment"></textarea>
+                        <input type="button" class="send_comment_btn" value="send" id="sendCommentBtn">
+                        <p id="errorMessage" class="showError"></p>
+                    </div>
+                </form>
+                <ul class="comment_list" id="comment_list"></ul>
+            </div>
+        </div>
+    </div>
+
+
 </body>

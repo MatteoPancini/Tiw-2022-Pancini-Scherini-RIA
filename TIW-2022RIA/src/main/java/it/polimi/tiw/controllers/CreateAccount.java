@@ -103,12 +103,13 @@ public class CreateAccount extends HttpServlet {
 				//provo a creare una cartella in img
 				if(newUserId != 0) {
 					String folderPath = getServletContext().getInitParameter("folderPath");
+					System.out.println(folderPath + newUserId);
 					File file = new File(folderPath + newUserId);
 					boolean bool = file.mkdir();
 				      if(bool){
 				         System.out.println("Directory created successfully");
 				      }else{
-				         System.out.println("Sorry couldn�t create specified directory");
+				         System.out.println("Sorry couldn't create specified directory");
 				      }
 				}
 				response.setStatus(HttpServletResponse.SC_OK);

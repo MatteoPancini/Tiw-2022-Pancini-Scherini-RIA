@@ -1,0 +1,10 @@
+{
+    //"editor.formatOnSave": true,
+    "emmet.preferences": {
+        "emmet.includeLanguages": {
+            "javascript": "javascriptreact"
+        },
+        "emmet.triggerExpasionOnTab": true
+    },
+    "emmet.triggerExpansionOnTab": true
+}

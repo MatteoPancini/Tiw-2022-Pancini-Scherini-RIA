@@ -5,7 +5,6 @@ public class Comment {
 
 	private int idComment;
 	private int idImage;
-	private int idAlbum;
 	private int idUser;
 	private String text;
 	private String username;
@@ -29,10 +28,9 @@ public class Comment {
 
 	
 	
-	public Comment(int idComment, int idImage, int idAlbum, int idUser, String text) {
+	public Comment(int idComment, int idImage, int idUser, String text) {
 		this.idComment = idComment;
 		this.idImage = idImage;
-		this.idAlbum = idAlbum;
 		this.idUser = idUser;
 		this.text = text;
 	}
@@ -57,15 +55,6 @@ public class Comment {
 		this.idImage = idImage;
 	}
 
-
-	public int getIdAlbum() {
-		return idAlbum;
-	}
-
-
-	public void setIdAlbum(int idAlbum) {
-		this.idAlbum = idAlbum;
-	}
 
 
 	public int getIdUser() {

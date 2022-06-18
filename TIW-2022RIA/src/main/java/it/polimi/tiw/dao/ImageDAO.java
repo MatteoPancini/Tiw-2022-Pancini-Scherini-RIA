@@ -5,7 +5,6 @@ import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class ImageDAO {
 	public List<Image> findAllAlbumImages(int idAlbum) throws SQLException {
 		List<Image> albumImagesList = new ArrayList<>();
 		
-        String imagesQuery = "SELECT * FROM image WHERE idAlbum = ? ORDER BY date DESC";
+        String imagesQuery = "SELECT * FROM image WHERE idAlbum = ? ORDER BY idImage DESC";
         
         ResultSet resultSet = null;
         PreparedStatement pstatement = null;
@@ -38,9 +37,13 @@ public class ImageDAO {
         		albumImage.setIdAlbum(resultSet.getInt("idAlbum"));
         		albumImage.setTitle(resultSet.getString("title"));
         		albumImage.setDescription(resultSet.getString("description"));
+        		albumImage.setDate(new Date(resultSet.getDate("date").getTime()));
+
+            /*
         		albumImage.setDate(new Date(resultSet.getDate("date").getTime()).toInstant()
               	      .atZone(ZoneId.systemDefault())
             	      .toLocalDateTime());
+            */
         		albumImage.setPath(resultSet.getString("path"));
         		
         		albumImagesList.add(albumImage);
@@ -82,9 +85,13 @@ public class ImageDAO {
         	selectedImage.setIdAlbum(resultSet.getInt("idAlbum"));
         	selectedImage.setTitle(resultSet.getString("title"));
         	selectedImage.setDescription(resultSet.getString("description"));
+        	selectedImage.setDate(new Date(resultSet.getDate("date").getTime()));
+
+          /*
         	selectedImage.setDate(new Date(resultSet.getDate("date").getTime()).toInstant()
           	      .atZone(ZoneId.systemDefault())
           	      .toLocalDateTime());
+          */
         	selectedImage.setPath(resultSet.getString("path"));
         	selectedImage.setUsername(resultSet.getString("username"));
         }catch(SQLException e) {
@@ -113,7 +120,7 @@ public class ImageDAO {
             preparedStatement.setInt(2, albumId);
             preparedStatement.setString(3, imageTitle);
             preparedStatement.setString(4, description);
-            preparedStatement.setObject(5, new java.sql.Timestamp(new Date().getTime()));
+            preparedStatement.setDate(5, new java.sql.Date(new Date().getTime()));
             preparedStatement.setString(6, imagePath);
             preparedStatement.executeUpdate();
         }

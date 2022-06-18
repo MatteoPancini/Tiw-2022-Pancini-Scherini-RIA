@@ -1,4 +1,4 @@
-:root{
+:root {
   --primary-color: #eee;
   --secondary-color: #6D7AE0;
   --grey-shade: #616161;
@@ -13,8 +13,14 @@
   font-weight: 300;
 }
 
-a{
-	text-decoration: none;
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
 }
 
 .albumList-table {
@@ -40,7 +46,8 @@ a{
 }
 
 
-.albumList-table th, td {
+.albumList-table th,
+td {
   padding: 20px 0;
   text-align: center;
 }
@@ -55,7 +62,6 @@ a{
   width: 75%;
   margin: auto;
   padding: 30px 0px 30px;
-
 }
 
 .welcome {
@@ -67,7 +73,8 @@ a{
   font-weight: 500;
 }
 
-html, body {
+html,
+body {
   font-size: 20px;
 }
 
@@ -93,11 +100,6 @@ header {
 
 }
 
-img {
-  text-align: center;
-  height: 30px;
-}
-
 .logo {
   cursor: pointer;
   color: white;
@@ -118,7 +120,7 @@ img {
   color: var(--secondary-color);
   border-radius: 100px 100px 100px 100px;
   border: 1px solid;
-  
+
 }
 
 .logout {
@@ -141,14 +143,13 @@ img {
   color: white;
 }
 
-
-.spaceNewAlbum{
-	width:50%;
-	margin: 0 25%;
-	text-align: center;
+.spaceNewAlbum {
+  width: 50%;
+  margin: 0 25%;
+  text-align: center;
 }
 
-.open_album_btn{
+.open_album_btn {
   color: var(--link-color);
   font-weight: 400;
   border: 2px solid var(--link-color);
@@ -158,12 +159,17 @@ img {
   transition: 0.2s all ease-in;
 }
 
-.open_album_btn:hover{
+.open_album_btn:hover {
   color: var(--primary-color);
   background-color: var(--link-color);
   transition: 0.1s all ease-in;
 }
 
+
+.showError {
+  color: red;
+  font-size: 0.8rem;
+}
 
 .createAlbum {
   position: relative;
@@ -174,13 +180,14 @@ img {
   padding: 9px 25px;
   margin: auto;
   letter-spacing: 1px;
-  cursor:pointer;
-  user-select:none;
+  cursor: pointer;
+  user-select: none;
   text-decoration: none;
   cursor: pointer;
   transition-duration: 0.5s;
   background-color: var(--secondary-color);
-  -webkit-transition-duration: 0.4s; /* Safari */
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
 }
 
 .createAlbum:hover {
@@ -195,7 +202,7 @@ img {
   position: absolute;
   border-radius: 4em;
   left: 0;
-  top:0;
+  top: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
@@ -208,16 +215,328 @@ img {
   position: absolute;
   border-radius: 4em;
   left: 0;
-  top:0;
+  top: 0;
   opacity: 1;
   transition: 0s;
 }
+
+
+.formContent {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  position: fixed;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+  top: 0;
+}
+
+.formContent.show {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.formIMGContent {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  position: fixed;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+  top: 0;
+}
+
+.formIMGContent.show {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+h1 {
+  margin: 0;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
+
+}
+
+.createButton {
+  padding-top: 40px;
+}
+
+.input {
+  border: none;
+  border-bottom: 2px solid var(--grey-shade);
+  width: 100%;
+  font-size: 20px;
+}
+
+.input:focus {
+  border: none;
+  border-bottom: 2px solid var(--grey-shade);
+  transition: all 0.15s ease-in;
+  outline: none;
+}
+
+.newElementButton {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: 0;
+  font-size: 22px;
+  padding: 1rem 0 1rem;
+  border-radius: 15px;
+  width: 100%;
+  margin: 0;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 0.15s ease-in;
+}
+
+.newElementButton:hover {
+  background-color: #af0dfd;
+  transition: all 0.15s ease-in;
+}
+
+.close {
+  color: red;
+  float: right;
+  padding: 10px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form_content_inner {
+  border-radius: 10;
+  margin-left: 25%;
+  width: 50%;
+  height: 100%;
+  padding: 20px;
+  background-color: white;
+  text-align: center;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.7);
+}
+
+.thumbnail {
+  width: 200px;
+  height: 112px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.spaceNewImage {
+  width: 50%;
+  margin: 20px 25%;
+  text-align: center;
+  margin-bottom: 60px;
+
+}
+
+.createImage {
+  position: relative;
+  background-color: white;
+  border-radius: 4em;
+  font-size: 16px;
+  color: white;
+  padding: 9px 25px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  transition-duration: 0.5s;
+  background-color: #6D7AE0;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+}
+
+.createImage:hover {
+  transition-duration: 0.1s;
+  color: white;
+  background-color: #af0dfd;
+}
+
+.createImage:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 4em;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 0.5s;
+  box-shadow: 0 0 10px 40px #6D7AE0;
+}
+
+.createImage:active:after {
+  box-shadow: 0 0 0 0 #6D7AE0;
+  position: absolute;
+  border-radius: 4em;
+  left: 0;
+  top: 0;
+  opacity: 1;
+  transition: 0s;
+}
+
+.arrowsDiv {
+  width: 100%;
+}
+
+.arrowsDiv .leftArrow {
+  float: left;
+  margin: 20px;
+  color: var(--secondary-color);
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.arrowsDiv .rightArrow {
+  float: right;
+  margin: 20px;
+  color: var(--secondary-color);
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.imageDetailsForm {
+  z-index: 1;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  position: absolute;
+  transition: opacity 0.5s ease;
+  top: 0;
+  visibility: hidden;
+}
+
+.imageDetailsContent {
+  position: relative;
+  z-index: 2;
+  border-radius: 10;
+  margin-left: 15%;
+  margin-right: 15%;
+  width: 70%;
+  height: 100%;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.7);
+}
+
+.selected_image {
+  max-width: 700px;
+  margin: 20px 0;
+  cursor: default;
+}
+
+
+.title {
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.description {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+hr {
+  margin-bottom: 40px;
+  color: #d2d2d2;
+}
+
+.comment_input {
+  display: flex;
+  background-color: #f0f0f0;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 15px;
+}
+
+.comment_input textarea {
+  width: 100%;
+  padding: 5px;
+  background-color: #f0f0f0;
+  border: 0px;
+  resize: none;
+
+}
+
+.comment_input textarea:focus {
+  outline: none;
+}
+
+.send_comment_btn {
+  padding: 0px 40px;
+  background-color: #6D7AE0;
+  color: white;
+  font-size: 20px;
+  border: 0px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease-in all;
+
+}
+
+.send_comment_btn:hover {
+  background-color: #af0dfd;
+  transition: 0.2s ease-in all;
+
+}
+
+.comment_list {
+  list-style: none;
+  margin-bottom: 5px;
+}
+
+.comment {
+  background-color: #F0F0F0;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.comment h4 {
+  font-weight: 500;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.comment p {
+  padding: 5px 50px 20px 10px;
+}
+
 
 @media screen and (max-width: 1000px) {
 
   .album {
     margin: 5%;
     width: 90%;
+  }
+
+  .imageDetailsContent {
+    margin: 0;
+    width: 100%;
   }
 
 
