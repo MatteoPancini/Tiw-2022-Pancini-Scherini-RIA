@@ -11,6 +11,7 @@ public class Image {
 	private Date date;
 	private String path;
 	private String username;
+	private int order;
 	
 	public String getUsername() {
 		return username;
@@ -25,7 +26,7 @@ public class Image {
 	public Image() {}
 	
 	
-	public Image(int idImage, int idUser, int idAlbum, String title, String description, Date date, String path) {
+	public Image(int idImage, int idUser, int idAlbum, String title, String description, Date date, String path, int order) {
 		this.idImage = idImage;
 		this.idUser = idUser;
 		this.idAlbum = idAlbum;
@@ -33,6 +34,7 @@ public class Image {
 		this.description = description;
 		this.date = date;
 		this.path = path;
+		this.order = order;
 	}
 
 
@@ -106,6 +108,16 @@ public class Image {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+
+	public int getOrder() {
+		return order;
+	}
+
+
+	public void setOrder(int order) {
+		this.order = order;
 	}
 	
 	

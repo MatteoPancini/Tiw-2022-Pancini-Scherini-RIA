@@ -22,8 +22,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import it.polimi.tiw.beans.User;
 import it.polimi.tiw.dao.ImageDAO;
-//import it.polimi.tiw.servlets.Exception;
-//import it.polimi.tiw.servlets.String;
 import it.polimi.tiw.utils.ConnectionHandler;
 
 /**

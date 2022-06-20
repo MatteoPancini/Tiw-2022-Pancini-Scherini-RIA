@@ -10,6 +10,8 @@
     <script src="utils.js" charset="utf-8" defer></script>
     <script src="modal.js" charset="utf-8" defer></script>
     <script src="home.js" charset="utf-8" defer></script>
+    <script src="tableSorting.js" charset="utf-8" defer></script>
+
     <title>Home Page</title>
 </head>
 
@@ -107,6 +109,11 @@
                 Add new Image
             </a>
         </div>
+        <div class="spaceSaveOrder">
+            <a id="saveOrder" class="saveOrder" type="button">
+                Save Order
+            </a>
+        </div>
     </div>
     <div class="formIMGContent" id="modalImageForm">
         <div class="form_content_inner">
@@ -134,14 +141,13 @@
     <div id="imageDetailsForm" class="imageDetailsForm">
         <div id="imageDetailsContent" class="imageDetailsContent">
             <span id="closeImageDetails" class="close">&times;</span>
-            <h1 class="title">Titolo: <span id="imageTitle"></span></h1>
+            <h1 class="title">Titolo: <span id="imageTitleContent"></span></h1>
             <img id="selected_image" class="selected_image" alt="can't load image"><br />
             <h2 class="title">user: <span id="imageCreator"></span></h2>
             <h2 class="title">creation date: <span id="imageDate"></span></h2>
             <h2 class="title">description:</h2>
-            <p class="description" id="imageDescription">
-                <hr />
-            </p>
+            <p class="description" id="imageDescription" />
+            <hr />
             <div class="comments_container">
                 <form id="comment_form" class="comment_form" action="#">
                     <div class="comment_input">
@@ -154,6 +160,6 @@
             </div>
         </div>
     </div>
-
-
 </body>
+
+</html>

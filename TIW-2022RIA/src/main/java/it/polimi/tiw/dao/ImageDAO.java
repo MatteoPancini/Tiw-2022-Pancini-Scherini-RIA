@@ -20,7 +20,7 @@ public class ImageDAO {
 	public List<Image> findAllAlbumImages(int idAlbum) throws SQLException {
 		List<Image> albumImagesList = new ArrayList<>();
 		
-        String imagesQuery = "SELECT * FROM image WHERE idAlbum = ? ORDER BY idImage DESC";
+        String imagesQuery = "SELECT * FROM image WHERE idAlbum = ? ORDER BY orderNum DESC";
         
         ResultSet resultSet = null;
         PreparedStatement pstatement = null;
@@ -112,6 +112,60 @@ public class ImageDAO {
         return selectedImage;
 	}
 	
+	public List<Image> getImagesPositionForOrdering(int albumId, String minId, String maxId) throws SQLException{
+		
+		List<Image> images = new ArrayList<>();
+
+		
+		ResultSet resultSet = null;
+        PreparedStatement pstatement = null;
+		
+		String query = "SELECT idImage, orderNum FROM image WHERE idImage <= ? AND idImage >= ? AND idAlbum = ? ORDER BY idImage";
+	
+		int minId_int = Integer.parseInt(minId);
+		int maxId_int = Integer.parseInt(maxId);
+
+		
+		try {
+        	pstatement = connection.prepareStatement(query);
+        	pstatement.setInt(1, minId_int);
+        	pstatement.setInt(2, maxId_int);
+        	pstatement.setInt(3, albumId);
+        	resultSet = pstatement.executeQuery();
+        	while(resultSet.next()) {
+        		Image image = new Image();
+        		image.setIdImage(resultSet.getInt("idImage"));
+        		image.setOrder(resultSet.getInt("orderNum"));
+        		images.add(image);
+        	}
+        	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+              try {
+                resultSet.close();
+              } catch (Exception e1) {
+                throw new SQLException(e1);
+              }
+              try {
+                pstatement.close();
+              } catch (Exception e2) {
+                throw new SQLException(e2);
+              }
+        }	
+		
+		return images;
+	}
+	
+	public void updateOrder(int idImage, int orderNum) throws SQLException{
+		String query = "UPDATE image SET orderNum = ? WHERE idImage = ?";
+		 try(PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	            preparedStatement.setInt(1, orderNum);
+	            preparedStatement.setInt(2, idImage);
+	            preparedStatement.executeUpdate();
+	        }
+	}
+	
 	
 	public void createNewImage(int idUser, int albumId, String imageTitle, String description, String imagePath) throws SQLException {
         String query = "INSERT INTO image (idUser, idAlbum, title, description, date, path) VALUES (?, ?, ?, ?, ?, ?)";
@@ -125,5 +179,4 @@ public class ImageDAO {
             preparedStatement.executeUpdate();
         }
     }
-
 }
