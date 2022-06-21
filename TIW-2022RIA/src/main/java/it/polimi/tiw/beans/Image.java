@@ -2,7 +2,7 @@ package it.polimi.tiw.beans;
 
 import java.util.Date;
 
-public class Image {
+public class Image implements Comparable<Image>{
 	private int idImage;
 	private int idUser;
 	private int idAlbum;
@@ -118,6 +118,11 @@ public class Image {
 
 	public void setOrder(int order) {
 		this.order = order;
+	}
+	
+	@Override
+	public int compareTo(Image i) {
+		return i.getOrder() - this.order;
 	}
 	
 	

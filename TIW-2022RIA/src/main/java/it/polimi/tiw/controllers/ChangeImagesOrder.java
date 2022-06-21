@@ -76,49 +76,81 @@ public class ChangeImagesOrder extends HttpServlet {
 		Map<String, Double> newOrder = new HashMap<String, Double>();
 		newOrder = (Map<String, Double>) gson.fromJson(json.toString(), newOrder.getClass());
 		
+		int sizeArr = newOrder.size();
+		System.out.println("Size arrays: " + sizeArr);
+		
+		String[] orderedClient = new String[sizeArr];
+		
 		System.out.println("Map json arriving from the client");
-		newOrder.entrySet().forEach(x -> System.out.println("id: "+x.getKey()+" position: "+x.getValue()));
+		newOrder.entrySet().forEach(x -> {
+			System.out.println("id: "+x.getKey()+" position: "+ x.getValue());
+			int value = x.getValue().intValue();
+		
+			orderedClient[value] = x.getKey();
+			System.out.println("pos: " + value + " value:" + orderedClient[value]);
+		});
+		
 		
 		// Servono per trovare gli estremi degli album della pagina
 		String minId = Collections.max(newOrder.keySet());
 		String maxId = Collections.min(newOrder.keySet());
+		int minId_int = Integer.parseInt(minId);
+		System.out.println("minId_int = " + minId_int);
+
 
 		List<Image> databaseOrder = new ArrayList<Image>();
+		String[] orderedDatabase = new String[sizeArr];
+		
+
 		try {
 			databaseOrder = imageDAO.getImagesPositionForOrdering(albumId, minId, maxId);
 			System.out.println("Map arriving from the db");
-			databaseOrder.forEach(x -> System.out.println("id: "+x.getIdImage()+" order: "+x.getOrder()));
+
+			Collections.sort(databaseOrder);
+			int k = 0;
+			for(Image img : databaseOrder) {
+				System.out.println("id: "+ img.getIdImage()+" order: "+ img.getOrder());
+				orderedDatabase[k] = String.valueOf(img.getIdImage());
+				k++;
+			}
 			
-			// FIX: Qui lo swap non funziona nel modo corretto, sopra in teoria è tutto ok
-			for(int i=newOrder.size()-1; i>=0;i--) {
-				if(!compare(newOrder, databaseOrder, i)) {
-					System.out.println("Id da aggiornare: "+databaseOrder.get(i).getIdImage()+ " | nuovo orderNum: "+getIdFromPos(newOrder, (double) i));
-					imageDAO.updateOrder(databaseOrder.get(i).getIdImage(), getIdFromPos(newOrder, (double) i));
+			for(int i = 0; i < sizeArr; i++) {
+				System.out.println("Client: " + orderedClient[i] + " DB: " + orderedDatabase[i]);
+			}
+			
+			for(int i = 0; i < sizeArr; i++) {
+				if(!(orderedClient[i].equalsIgnoreCase(orderedDatabase[i]))) {
+					System.out.println("Entro");
+					for(int j=0; j < sizeArr; j++) {
+						if(orderedClient[j].equalsIgnoreCase(orderedDatabase[i])) {
+							System.out.println("SI");
+							for(Image img : databaseOrder) {
+								if(String.valueOf(img.getIdImage()).equalsIgnoreCase(orderedDatabase[j])) {
+									System.out.println("Aggiorno " + orderedDatabase[i] + " con " + img.getOrder());
+									try {
+										imageDAO.updateOrder(Integer.valueOf(orderedDatabase[i]), img.getOrder());
+									} catch(SQLException e) {
+										e.printStackTrace();
+									}
+									break;
+								}
+							}
+							break;	
+						}
+						System.out.println("NO");
+					}	
 				}
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private boolean compare(Map<String, Double> newOrder, List<Image> databaseOrder, int i) {
-			if(databaseOrder.get(i).getIdImage() == getIdFromPos(newOrder, (double) i)) {
-				return true;
-			}
-			return false;
-	}
-	
-	/*
-	 * Il metodo ritorna la chiave corrispondente alla posizione nell'oggetto json 
-	 * che arriva dal client
-	 */
-	private int getIdFromPos(Map<String, Double> newOrder, Double pos) {
-		int id = Integer.parseInt(newOrder.entrySet().stream()
-				.filter(x -> pos.equals(x.getValue()))
-				.map(Map.Entry::getKey)
-				.findFirst().get());
-		return id;
+		
+		
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 	}
 
 }

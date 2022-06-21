@@ -1,7 +1,6 @@
 function tableSort() {
 
     console.log("start");
-    //const draggables = document.querySelectorAll('.draggable');
     const draggables = document.querySelectorAll(".draggable");
     const container = document.getElementById('imagesContainerBody');
 
@@ -70,11 +69,7 @@ function tableSort() {
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(request);
 
-
         document.getElementById("saveOrder").style.visibility = "hidden";
-
-    };
-
-
-
+        window.location.href = 'home.html';
+    }
 }

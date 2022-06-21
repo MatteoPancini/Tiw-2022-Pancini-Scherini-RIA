@@ -196,12 +196,10 @@
             }
 
             for (let img of imagesToShow) {
-                console.log(i);
+                console.log(i + " albumImage " + albumImages[i].idImage);
                 if (i == 5) {
                     break;
                 }
-                let imgPath = img.path;
-                let imgId = img.idUser;
                 var params = "fileName=" + albumImages[i].path + "&userId=" + albumImages[i].idUser;
 
                 console.log(params)
@@ -309,7 +307,7 @@
                     });
 
                     // Post a new comment
-                    document.getElementById("sendCommentBtn").addEventListener("click", (e) => {
+                    document.getElementById("sendCommentBtn").onclick = ((e) => {
                         console.log("post a new comment");
 
                         let commentText = document.forms["comment_form"]["comment"].value;
@@ -355,18 +353,15 @@
                     });
 
                 });
-                //cell.src =  fullPath;
-                //console.log(cell.src);
+
                 cellContainer.appendChild(cell);
                 row.appendChild(cellContainer);
                 self.imagesContainerBody.appendChild(row);
-                //TODO: aggiungere l'addEventListener a seconda cell
                 i++;
                 self.imagesContainerBody.appendChild(row);
             }
 
             self.albumContainer.style.visibility = 'visible';
-            //this.newImageButton.className = "createImage";
 
             if (imagesToShow.length < 5) {
                 self.directionalButtons.reset();
@@ -375,8 +370,7 @@
             if (showAddSort) {
                 document.getElementsByTagName("body")[0].style.cursor = "grabbing"
                 const rows = document.querySelectorAll("table > tbody > tr");
-                //rows.setAttribute("draggable", true)
-                //console.log(rows)
+
                 rows.forEach(row => {
                     row.setAttribute('draggable', true);
                     row.classList.add('draggable');
@@ -393,57 +387,168 @@
             var self = this;
             self.imagesContainerBody.innerHTML = "";
             imagesToShow = [];
-            //console.log("Images to show size: " + imagesToShow.length);
 
-
-            //let i = currPage;
             for (i = currPage * 5; i < (currPage * 5 + 5); i++) {
-                console.log(i);
+                if (i == albumImages.length) {
+                    break;
+                }
+                console.log(i + " albumImage " + albumImages[i].idImage);
                 imagesToShow.push(albumImages[i]);
                 console.log("Images to show size: " + imagesToShow.length);
                 row = document.createElement("tr");
                 cell = document.createElement("td");
                 cell.textContent = albumImages[i].title;
                 row.appendChild(cell);
+                let cellContainer = document.createElement("td");
                 cell = document.createElement("img");
 
                 makeCall('GET', 'GetImage?fileName=' + albumImages[i].path + "&userId=" + albumImages[i].idUser, null, (req) => {
-                    var message = req.responseText;
                     if (req.readyState == 4) {
                         if (req.status == 200) {
-                            //albumImages = JSON.parse(message);
-                            cell.src = "GetImage?fileName=" + albumImages[i].path + "&userId=" + albumImages[i].idUser;
-                            //console.log(cell.src);
                         } else if (req.status == 500) {
                             self.alert.textContent =
                                 'INTERNAL SERVER ERROR WHILE RETRIVING IMAGE';
                         }
                     }
                 });
-                //cell.src = "GetImage?fileName=" + albumImages[i].path + "&userId=" + albumImages[i].idUser;
                 let imgSrc = "GetImage?fileName=" + albumImages[i].path + "&userId=" + albumImages[i].idUser;
                 cell.src = imgSrc;
                 cell.setAttribute("imageID", albumImages[i].idImage);
                 console.log("Order " + albumImages[i].order);
                 cell.setAttribute("imageOrder", albumImages[i].order);
                 cell.className = "thumbnail";
-                //console.log(cell.src);
-                //cell.className = "thumbnail";
-                //cell.src =  fullPath;
-                //console.log(cell.src);
 
-                row.appendChild(cell);
+                let commentList = document.getElementById("comment_list");
+                let imageDetailsContainer = document.getElementById("imageDetailsForm");
+
+                // Open ImageDetails modal window on click
+                cell.addEventListener("click", (e) => {
+                    let currImageID = e.target.getAttribute("imageID");
+                    console.log("click image, imageID=" + currImageID);
+                    makeCall('GET', 'ShowImageDetails?image=' + currImageID, null, (req) => {
+                        var message = req.responseText;
+                        if (req.readyState == 4) {
+                            if (req.status == 200) {
+                                let imageDetails = JSON.parse(message);
+                                console.log(imageDetails);
+                                // make modal window visible
+                                imageDetailsContainer.style.visibility = "visible";
+
+                                // title name
+                                let imageTitleContent = document.getElementById("imageTitleContent");
+                                imageTitleContent.innerHTML = imageDetails.title;
+
+                                // image full size
+                                let fullSizeImage = document.getElementById("selected_image");
+                                fullSizeImage.src = imgSrc;
+
+                                // creator name
+                                let imageCreator = document.getElementById("imageCreator");
+                                imageCreator.innerHTML = imageDetails.username;
+
+                                // date
+                                let imageDate = document.getElementById("imageDate");
+                                imageDate.innerHTML = imageDetails.date;
+
+                                // description
+                                let imageDescription = document.getElementById("imageDescription");
+                                imageDescription.innerHTML = imageDetails.description;
+
+                            } else if (req.status == 500) {
+                                self.alert.textContent =
+                                    'INTERNAL SERVER ERROR WHILE RETRIVING IMAGE DETAILS';
+                            }
+                        }
+                    });
+
+                    // Get the list of comments related to the selected image
+                    makeCall('GET', 'GetComments?image=' + currImageID, null, (req) => {
+                        var message = req.responseText;
+                        if (req.readyState == 4) {
+                            if (req.status == 200) {
+                                let comments = [];
+                                comments = JSON.parse(message);
+                                console.log(comments);
+                                comments.forEach(comment => {
+                                    let liElement = document.createElement("li");
+                                    liElement.className = "comment";
+
+                                    let user = document.createElement("h4");
+                                    user.innerHTML = comment.username;
+
+                                    let commentText = document.createElement("p");
+                                    commentText.innerHTML = comment.text;
+
+                                    liElement.appendChild(user);
+                                    liElement.appendChild(commentText);
+
+                                    commentList.appendChild(liElement);
+
+                                });
+
+                            } else if (req.status == 500) {
+                                self.alert.textContent =
+                                    'INTERNAL SERVER ERROR WHILE RETRIVING COMMENTS';
+                            }
+                        }
+                    });
+
+                    // Post a new comment
+                    document.getElementById("sendCommentBtn").onclick = ((e) => {
+                        console.log("post a new comment");
+
+                        let commentText = document.forms["comment_form"]["comment"].value;
+                        console.log(commentText);
+
+                        if (commentText == "") {
+                            alert("Field must not be empty!");
+                            return;
+                        }
+
+                        console.log('PostComment?image=' + currImageID);
+                        console.log(e.target.closest('form'));
+                        makeCall('POST', 'PostComment?image=' + currImageID, e.target.closest('form'), (x) => {
+                            if (x.readyState == XMLHttpRequest.DONE) {
+                                var message = x.responseText;
+                                switch (x.status) {
+                                    case 200:
+                                        alert('Comment added!');
+                                        imageDetailsContainer.style.visibility = "hidden";
+                                        commentList.replaceChildren();
+                                        break;
+                                    case 400: // bad request
+                                        document.getElementById('errorMessage').innerText =
+                                            message;
+                                        break;
+                                    case 401: // unauthorized
+                                        document.getElementById('errorMessage').innerText =
+                                            message;
+                                        break;
+                                    case 500: // server error
+                                        document.getElementById('errorMessage').innerText =
+                                            message;
+                                        break;
+                                }
+                            }
+                        });
+                    });
+
+                    // close the modal window
+                    document.getElementById("closeImageDetails").addEventListener("click", (e) => {
+                        imageDetailsContainer.style.visibility = "hidden";
+                        commentList.replaceChildren();
+                    });
+
+                });
+
+                cellContainer.appendChild(cell);
+                row.appendChild(cellContainer);
                 self.imagesContainerBody.appendChild(row);
-
-                if ((i + 1) == albumImages.length) {
-                    break;
-                }
             }
             if (showAddSort) {
                 document.getElementsByTagName("body")[0].style.cursor = "grabbing"
                 const rows = document.querySelectorAll("table > tbody > tr");
-                //rows.setAttribute("draggable", true)
-                //console.log(rows)
+
                 rows.forEach(row => {
                     row.setAttribute('draggable', true);
                     row.classList.add('draggable');
@@ -451,7 +556,6 @@
                 tableSort();
 
             }
-            //this.directionalButtons.update();
         }
 
 
@@ -550,45 +654,25 @@
 
         this.reset = function () {
             document.getElementById("prevButton").style.visibility = "hidden";
-            //console.log(this.next.style.visibility);
             document.getElementById("nextButton").style.visibility = "hidden";
         }
 
         this.update = function () {
             console.log("Album images in update" + albumImages.length)
             if (albumImages.length > 5) {
-                //console.log("dovrei essere qui perchè > 5");
                 var self = this;
                 console.log("CURRPAGE" + currPage);
                 console.log("imageToShow: " + imagesToShow.length + " albumImages: " + albumImages.length + " currPage:" + currPage);
 
 
                 document.getElementById("prevButton").style.visibility = "hidden";
-                //console.log(this.next.style.visibility);
                 document.getElementById("nextButton").style.visibility = "hidden";
-                //console.log(this.prev.style.visibility);
                 if (currPage > 0) {
-                    //console.log("NON DEVO ESSRCI ENTRATO");
                     console.log("first IF")
                     document.getElementById("arrows").classList.add("arrowsDiv");
                     document.getElementById("prevButton").style.visibility = "visible";
                     document.getElementById("prevButton").classList.add("leftArrow");
 
-
-                    /*
-                    document.getElementById("prevButton").addEventListener("click", function () {
-                        console.log("Click prev")
-                        if (currPage === 0) {
-                            return;
-                        }
-                        currPage--;
-                        self.update();
-                        displayedAlbum.albumDetails.update();
-                        
-                        //personalAlbumsList.albumDetails.update();
-                        //communityAlbumsList.albumDetails.update();
-                    });
-                    */
                     document.getElementById("prevButton").onclick = function () {
                         console.log("Click prev")
                         if (currPage === 0) {
@@ -598,8 +682,6 @@
 
                         displayedAlbum.albumDetails.update();
                         self.update();
-                        //personalAlbumsList.albumDetails.update();
-                        //communityAlbumsList.albumDetails.update();
                     };
 
                     if (albumImages.length - (currPage + 1) * 5 <= 0) {
@@ -614,23 +696,7 @@
                     document.getElementById("arrows").classList.add("arrowsDiv");
                     document.getElementById("nextButton").style.visibility = "visible";
                     document.getElementById("nextButton").classList.add("rightArrow");
-                    //console.log(this.next.style.visibility);
 
-                    /*
-                    document.getElementById("nextButton").addEventListener("click", function () {
-                        if ((currPage + 1) * 5 > albumImages.length) {
-                            return;
-                        }
-                        console.log("Click next")
-
-                        currPage++;
-                        self.update();
-                        displayedAlbum.albumDetails.update();
-                        
-                        //personalAlbumsList.albumDetails.update();
-                        //communityAlbumsList.albumDetails.update();
-                    });
-                    */
                     document.getElementById("nextButton").onclick = function () {
                         if ((currPage + 1) * 5 > albumImages.length) {
                             return;
@@ -641,8 +707,6 @@
 
                         displayedAlbum.albumDetails.update();
                         self.update();
-                        //personalAlbumsList.albumDetails.update();
-                        //communityAlbumsList.albumDetails.update();
                     };
 
                 }
@@ -650,7 +714,6 @@
 
                 console.log("entro qui")
                 document.getElementById("prevButton").style.visibility = "hidden";
-                //console.log(this.next.style.visibility);
                 document.getElementById("nextButton").style.visibility = "hidden";
             }
         }
