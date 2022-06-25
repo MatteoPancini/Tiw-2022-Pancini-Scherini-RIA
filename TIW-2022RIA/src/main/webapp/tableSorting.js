@@ -70,6 +70,18 @@ function tableSort() {
         xhr.send(request);
 
         document.getElementById("saveOrder").style.visibility = "hidden";
-        window.location.href = 'home.html';
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    alert("Order saved!");
+                    window.location.href = "home.html";
+                }
+                else if (xhr.status == 500) {
+                    alert("SERVER ERROR: Order not saved");
+                    window.location.href = "home.html";
+                }
+
+            }
+        }
     }
 }

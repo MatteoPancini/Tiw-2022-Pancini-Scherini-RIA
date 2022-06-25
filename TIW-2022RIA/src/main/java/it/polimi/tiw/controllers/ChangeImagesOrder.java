@@ -143,8 +143,10 @@ public class ChangeImagesOrder extends HttpServlet {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.setCharacterEncoding("UTF-8");
+			return;
 		}
 		
 		

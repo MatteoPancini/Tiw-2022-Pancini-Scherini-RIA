@@ -62,20 +62,6 @@ public class GetAlbumPage extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to retrieve album images");
             return;
 		}
-		
-		
-		//TODO: QUESTO CONTROLLO POTREBBE ESSERE FATTO SEMPLICEMENTE LATO CLIENT
-		//-----------------------------------------------
-        boolean sameUser = false;
-        
-        if(albumImages.size() != 0) {
-        	if(userId == albumImages.get(0).getIdUser())
-            	sameUser = true;
-
-        } else {
-        	sameUser = checkUserAlbums(userId, albumId);
-        }
-		//-----------------------------------------------
         
         Gson gson = new GsonBuilder().setDateFormat("yyyy MM dd").create();
         String json = gson.toJson(albumImages);
