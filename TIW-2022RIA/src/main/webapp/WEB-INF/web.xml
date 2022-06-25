@@ -24,6 +24,19 @@
   	<filter-name>UserChecker</filter-name>
     <filter-class>it.polimi.tiw.filters.UserChecker</filter-class> 
   </filter>
+  <filter-mapping> 
+    <filter-name>UserChecker</filter-name> 
+    <url-pattern>/ChangeImagesOrder</url-pattern> 
+    <url-pattern>/PostAlbum</url-pattern> 
+    <url-pattern>/GetAlbumPage</url-pattern> 
+    <url-pattern>/PostImage</url-pattern> 
+    <url-pattern>/ShowImageDetails</url-pattern> 
+    <url-pattern>/GetComment</url-pattern> 
+    <url-pattern>/PostComment</url-pattern> 
+    <url-pattern>/GetPersonalAlbums</url-pattern> 
+    <url-pattern>/GetOtherAlbums</url-pattern> 
+    <url-pattern>/GetImage</url-pattern> 
+ </filter-mapping> 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
