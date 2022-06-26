@@ -39,11 +39,6 @@ public class ImageDAO {
         		albumImage.setDescription(resultSet.getString("description"));
         		albumImage.setDate(new Date(resultSet.getDate("date").getTime()));
 
-            /*
-        		albumImage.setDate(new Date(resultSet.getDate("date").getTime()).toInstant()
-              	      .atZone(ZoneId.systemDefault())
-            	      .toLocalDateTime());
-            */
         		albumImage.setPath(resultSet.getString("path"));
         		
         		albumImagesList.add(albumImage);
@@ -87,15 +82,11 @@ public class ImageDAO {
         	selectedImage.setDescription(resultSet.getString("description"));
         	selectedImage.setDate(new Date(resultSet.getDate("date").getTime()));
 
-          /*
-        	selectedImage.setDate(new Date(resultSet.getDate("date").getTime()).toInstant()
-          	      .atZone(ZoneId.systemDefault())
-          	      .toLocalDateTime());
-          */
         	selectedImage.setPath(resultSet.getString("path"));
         	selectedImage.setUsername(resultSet.getString("username"));
         }catch(SQLException e) {
         	e.printStackTrace();
+        	return null;
 
         } finally {
               try {

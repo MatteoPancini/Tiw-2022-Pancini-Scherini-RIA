@@ -109,6 +109,7 @@ public class ChangeImagesOrder extends HttpServlet {
 			Collections.sort(databaseOrder);
 			int k = 0;
 			for(Image img : databaseOrder) {
+				if(k>=5) break;
 				System.out.println("id: "+ img.getIdImage()+" order: "+ img.getOrder());
 				orderedDatabase[k] = String.valueOf(img.getIdImage());
 				k++;

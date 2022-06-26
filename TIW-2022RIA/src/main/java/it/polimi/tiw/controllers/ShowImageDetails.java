@@ -45,6 +45,10 @@ public class ShowImageDetails extends HttpServlet {
 		
 		try {
 			imgDetails = imageDAO.getImageFromId(imgID);
+			if(imgDetails==null) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Image not found");
+				return;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
