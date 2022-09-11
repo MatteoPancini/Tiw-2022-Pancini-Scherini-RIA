@@ -2,7 +2,7 @@
 
 The project consists of a web app that manages an image gallery.
 Every user can register, login, create a new album, upload an image on an album, write a comment below an image, see other's user images.
-The RIA version adds (in addition to client-side controls) the possibility to reorder personal images.
+The RIA version adds (in addition to client-side controls and modal pages) the possibility to reorder personal images.
 
 The project was part of the final evaluation of the course Technology for Web Applications.
 
