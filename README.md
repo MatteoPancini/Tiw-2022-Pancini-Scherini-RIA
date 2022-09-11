@@ -19,3 +19,4 @@ Prof. Piero Fraternali
 ## 🐞 Bugs
 During the final evaluation has been discovered a bug in the PostImage servlet that denies the possibility to use the web app in parallel on more than one different sessions open (while posting a new image).
 This problem has been reported but not fixed.
+The table sorting's servlet doesn't implement the auto-commit, which should complete the app in a better way.
